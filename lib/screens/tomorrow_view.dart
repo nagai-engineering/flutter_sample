@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../providers/task_provider.dart';
 import '../widgets/tip_bubble.dart';
 import '../widgets/task_card.dart';
@@ -72,7 +73,7 @@ class _TomorrowViewState extends State<TomorrowView> {
               // Tip Bubble
               TipBubble(
                 emoji: '😊',
-                text: '無責任にいろいろ明日のジブンに任せちゃおう!',
+                text: '明日のジブンにいろいろお願いしちゃおう！',
                 icon: Icons.lightbulb_outline,
                 backgroundColor: Colors.yellow.shade50,
                 borderColor: Colors.yellow.shade300,
@@ -104,8 +105,13 @@ class _TomorrowViewState extends State<TomorrowView> {
                   Expanded(
                     child: TextField(
                       controller: _textController,
+                      maxLength: 30,
                       decoration: InputDecoration(
                         hintText: '頼んだ!明日のジブン!',
+                        hintStyle: TextStyle(
+                          color: Colors.grey[400],
+                        ),
+                        counterText: '',
                         filled: true,
                         fillColor: Colors.white.withValues(alpha: 0.7),
                         border: OutlineInputBorder(
@@ -237,15 +243,11 @@ class _TomorrowViewState extends State<TomorrowView> {
 
     final rotations = [1.0, -1.0, 2.0, -2.0];
 
-    return GridView.builder(
+    return MasonryGridView.count(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 1.2,
-      ),
+      crossAxisCount: 1,
+      mainAxisSpacing: 16,
       itemCount: tasks.length,
       itemBuilder: (context, index) {
         final task = tasks[index];
